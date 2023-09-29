@@ -7,7 +7,7 @@ import Search from "./Search"
 
 
 const Main = () => {
-  const version = Constants.expoConfig.version;
+  const version = Constants.expoConfig.ios.buildNumber;
 
   return (
     <ImageBackground source={Puppy} style={styles.image}>

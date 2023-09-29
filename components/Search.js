@@ -1,22 +1,22 @@
 import React, {useState} from "react";
 import { View, ScrollView } from "react-native";
 import { Searchbar } from "react-native-paper";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Text} from "react-native";
 
 function Search() {
 
   const [searchQuery, setSearchQuery] = useState("")
+  const apiURL = process.env.EXPO_PUBLIC_API_URL;
   
   const handleSubmit = () => {
-    const apiURL = process.env.EXPO_PUBLIC_API_URL;
 
     console.log(searchQuery)
-    console.log(apiURL)
   }
-
+  
   const onChangeSearch = (query) => {
     setSearchQuery(query);
   };
+  
 
   return (
     <View>
@@ -34,6 +34,7 @@ function Search() {
           </View>
         </View>
       </ScrollView>
+          
     </View>
   );
 }
