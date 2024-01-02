@@ -1,6 +1,6 @@
 import React from "react";
 import { StatusBar } from "expo-status-bar";
-import { Text, View, ImageBackground, StyleSheet, SafeAreaView , TouchableOpacity} from "react-native";
+import { Text, View, ImageBackground, StyleSheet, SafeAreaView , TouchableOpacity, Linking} from "react-native";
 import Puppy from "../assets/images/doggy-bkg.jpg";
 import Constants from "expo-constants";
 import Search from "./Search"
