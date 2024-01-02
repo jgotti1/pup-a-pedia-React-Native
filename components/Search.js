@@ -1,20 +1,22 @@
 import React, {useState} from "react";
 import { View, ScrollView } from "react-native";
 import { Searchbar } from "react-native-paper";
-import { StyleSheet, Text} from "react-native";
+import { StyleSheet, Text } from "react-native";
+import getBreedInfo from "../scripts/dogapi";
+
 
 function Search() {
 
-  const [searchQuery, setSearchQuery] = useState("")
-  const apiURL = process.env.EXPO_PUBLIC_API_URL;
+  const [breed, setBreed] = useState("")
+ 
   
   const handleSubmit = () => {
-
-    console.log(searchQuery)
+    console.log(breed)
+  getBreedInfo(breed)
   }
   
   const onChangeSearch = (query) => {
-    setSearchQuery(query);
+    setBreed(query);
   };
   
 
@@ -26,7 +28,7 @@ function Search() {
             <Searchbar
               placeholder="Search"
               onChangeText={onChangeSearch}
-              value={searchQuery}
+              value={breed}
               onSubmitEditing={handleSubmit}
               autoCorrect={false}
               spellCheck={false}

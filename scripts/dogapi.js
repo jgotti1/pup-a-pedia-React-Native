@@ -1,7 +1,9 @@
 
 
 // API Ninja 
-const breed = "great danes"
+
+const getBreedInfo = async (breed) => {
+// const breed = "great dane"
 
 const url = `https://api.api-ninjas.com/v1/dogs?name=${breed}&offset=0`;
 
@@ -13,7 +15,7 @@ const options = {
     
   },
 };
-const getTeamInfo = async () => {
+
   try {
     const response = await fetch(url, options);
     const result = await response.json();
@@ -164,6 +166,6 @@ const getTeamInfo = async () => {
   }
 };
 
-getTeamInfo();
+export default getBreedInfo
 
 
