@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import { View, ScrollView, Alert } from "react-native";
 import { Searchbar } from "react-native-paper";
 import { StyleSheet, Text } from "react-native";
-// import getBreedInfo from "../scripts/dogapi";
+
 
 
 function Search({setBreedResults}) {
@@ -41,7 +41,8 @@ if (!breed) {
         Alert.alert('No Breed Found', 'Please enter a valid breed');
         return null;; // Added return statement to exit the function
     } else {
-    setBreedResults(result)
+      setBreedResults(result)
+  
     }
     
     } catch (error) {

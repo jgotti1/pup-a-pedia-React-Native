@@ -13,7 +13,6 @@ const Main = () => {
   const version = Constants.expoConfig.ios.buildNumber;
   const [breedResults, setBreedResults] = useState(null)
   const [isPressed, setIsPressed] = useState(false);
-
 console.log(breedResults)
   return (
     <ImageBackground source={Puppy} style={styles.image}>
