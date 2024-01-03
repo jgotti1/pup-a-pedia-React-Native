@@ -1,4 +1,4 @@
-
+import { Alert } from 'react-native';
 
 // API Ninja 
 
@@ -22,15 +22,13 @@ const options = {
     const result = await response.json();
     
     if (result.length === 0) {
-    console.log('No Breed Found');
+      console.log('No Breed Found');
+       Alert.alert('No Breed Found', 'Please enter a valid breed');
     return; // Added return statement to exit the function
-  }
+  }  
 
 
     console.log("----------------");
-  
-
-
     console.log(result);
 
     // Shedding 
@@ -168,7 +166,8 @@ const options = {
     
     console.error(error); 
   }
-};
+}
+
 
 export default getBreedInfo
 
