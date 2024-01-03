@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     backgroundColor: "rgba(231, 229, 229, 0.5)", 
     borderRadius: 20,
-   shadowColor: "rgba(0, 0, 0, 0.5)", // Shadow color
+    shadowColor: "rgba(0, 0, 0, 0.5)", // Shadow color
     shadowOffset: { width: 14, height: 14 }, // Shadow offset
     shadowOpacity: 0.8, // Shadow opacity
     shadowRadius: 5, // Shadow radius
@@ -45,11 +45,10 @@ const styles = StyleSheet.create({
 
   cardImage: {
 
-    height: 200, // Adjust the height as needed
-    resizeMode: "cover", // or "contain" based on your preference
+    height: 225, 
+    resizeMode: "stretch", 
     borderRadius: 30, 
     margin: 10,
-    backgroundColor: "red"
   
   },
   scrollViewContent: {
@@ -62,8 +61,8 @@ const styles = StyleSheet.create({
     fontSize: 23,
     letterSpacing: 3,
     textAlign: "center",
-      marginTop: 10,
-     textShadowColor: "rgba(0, 0, 0, 0.5)", // Shadow color
+    marginTop: 10,
+    textShadowColor: "rgba(0, 0, 0, 0.5)", // Shadow color
     textShadowOffset: { width: 2, height: 2 }, // Shadow offset
     textShadowRadius: 5, // Shadow radius
   },
