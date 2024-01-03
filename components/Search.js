@@ -5,9 +5,9 @@ import { StyleSheet, Text } from "react-native";
 
 
 
-function Search({setBreedResults}) {
+function Search({setBreedResults, breed, setBreed}) {
 
-  const [breed, setBreed] = useState("")
+ 
   const [hideSearch, setHideSearch] = useState(false);
   
  

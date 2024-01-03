@@ -2,7 +2,7 @@ import React from "react";
 import { View, StyleSheet, Image, ScrollView, Text  } from "react-native";
 import { Card } from "react-native-paper";
 
-const ResultDisplay = ({ breedResults }) => {
+const ResultDisplay = ({ breedResults, breed }) => {
 
   // API translations / descriptions 
   

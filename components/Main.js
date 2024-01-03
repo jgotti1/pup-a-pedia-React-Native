@@ -13,7 +13,8 @@ const Main = () => {
   const version = Constants.expoConfig.ios.buildNumber;
   const [breedResults, setBreedResults] = useState(null)
   const [isPressed, setIsPressed] = useState(false);
-console.log(breedResults)
+  const [breed, setBreed] = useState("")
+
   return (
     <ImageBackground source={Puppy} style={styles.image}>
       <SafeAreaView style={styles.container}>
@@ -29,12 +30,13 @@ console.log(breedResults)
         <Text style={styles.title}>
           Pup <Text style={styles.titlePaw}>A</Text> Pedia
         </Text>
-        {!breedResults && <Search setBreedResults={setBreedResults} />}
+        {!breedResults && <Search setBreedResults={setBreedResults} breed={breed} setBreed={setBreed} />}
         {!breedResults && <Text style={styles.breedSearch}>
           Which breed shall we explore together?
         </Text>}
-        {breedResults && <ResultDisplay breedResults={breedResults} />}
-       {breedResults && < Reset setBreedResults={setBreedResults} setIsPressed={setIsPressed} isPressed={isPressed} />}
+        {breedResults && <Text style={styles.breedName}>Search results for the breed: '{breed}'"</Text>}
+        {breedResults && <ResultDisplay breedResults={breedResults} breed={breed} />}
+        {breedResults && < Reset setBreedResults={setBreedResults} setIsPressed={setIsPressed} isPressed={isPressed} />}
       </SafeAreaView>
     </ImageBackground>
   );
@@ -99,5 +101,16 @@ const styles = StyleSheet.create({
     // fontFamily: "LilitaOne-Regular",
     fontSize: 12,
     letterSpacing: 2,
+  },
+     breedName: {
+      color: "white",
+      fontFamily: "Bangers-Regular",
+      fontSize: 16,
+      letterSpacing: 1.1,
+      textAlign: "center",
+      marginTop: 1,
+      textShadowColor: "rgba(0, 0, 0, 0.5)", // Shadow color
+      textShadowOffset: { width: 2, height: 2 }, // Shadow offset
+      textShadowRadius: 5, // Shadow radius
   },
 });
