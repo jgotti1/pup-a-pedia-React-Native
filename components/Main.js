@@ -5,6 +5,8 @@ import Puppy from "../assets/images/doggy-bkg.jpg";
 import Constants from "expo-constants";
 import Search from "./Search"
 import Reset from "./Reset"
+import ResultDisplay from "./ResultDisplay";
+
 
 
 const Main = () => {
@@ -32,6 +34,7 @@ console.log(breedResults)
         {!breedResults && <Text style={styles.breedSearch}>
           Which breed shall we explore together?
         </Text>}
+        {breedResults && <ResultDisplay breedResults={breedResults} />}
        {breedResults && < Reset setBreedResults={setBreedResults} setIsPressed={setIsPressed} isPressed={isPressed} />}
       </SafeAreaView>
     </ImageBackground>
