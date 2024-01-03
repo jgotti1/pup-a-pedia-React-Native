@@ -268,7 +268,9 @@ const styles = StyleSheet.create({
 
     height: 225, 
     resizeMode: "stretch", 
-    borderRadius: 30, 
+    borderRadius: 30,
+    borderColor: "#7d7d7d",
+    borderWidth: 1,
     marginTop: 10,
     marginLeft: 12,
     marginRight: 12,
