@@ -1,14 +1,18 @@
-import React from "react";
+import React, {useState} from "react";
 import { StatusBar } from "expo-status-bar";
 import { Text, View, ImageBackground, StyleSheet, SafeAreaView , TouchableOpacity, Linking} from "react-native";
 import Puppy from "../assets/images/doggy-bkg.jpg";
 import Constants from "expo-constants";
 import Search from "./Search"
+import Reset from "./Reset"
 
 
 const Main = () => {
   const version = Constants.expoConfig.ios.buildNumber;
+  const [breedResults, setBreedResults] = useState(null)
+  const [isPressed, setIsPressed] = useState(false);
 
+console.log(breedResults)
   return (
     <ImageBackground source={Puppy} style={styles.image}>
       <SafeAreaView style={styles.container}>
@@ -24,10 +28,11 @@ const Main = () => {
         <Text style={styles.title}>
           Pup <Text style={styles.titlePaw}>A</Text> Pedia
         </Text>
-        <Search />
-        <Text style={styles.breedSearch}>
+        {!breedResults && <Search setBreedResults={setBreedResults} />}
+        {!breedResults && <Text style={styles.breedSearch}>
           Which breed shall we explore together?
-        </Text>
+        </Text>}
+       {breedResults && < Reset setBreedResults={setBreedResults} setIsPressed={setIsPressed} isPressed={isPressed} />}
       </SafeAreaView>
     </ImageBackground>
   );

@@ -2,35 +2,53 @@ import React, {useState} from "react";
 import { View, ScrollView, Alert } from "react-native";
 import { Searchbar } from "react-native-paper";
 import { StyleSheet, Text } from "react-native";
-import getBreedInfo from "../scripts/dogapi";
+// import getBreedInfo from "../scripts/dogapi";
 
 
-function Search() {
+function Search({setBreedResults}) {
 
   const [breed, setBreed] = useState("")
   const [hideSearch, setHideSearch] = useState(false);
-  const [breedResults, setBreedResults] = useState()
- 
   
-  const handleSubmit = () => {
+ 
+
+  // API INfo 
+  const apiURL = process.env.EXPO_PUBLIC_API_URL;
+  const apiKey = process.env.EXPO_PUBLIC_API_KEY;
+
+const options = {
+  method: "GET",
+  headers: {
+ 
+    "X-Api-Key": apiKey,
+    
+  },
+};
+  
+  const handleSubmit = async () => {
 
 if (!breed) {
       Alert.alert("Please enter a Breed to search.");
       return; // Exit the function early if searchQuery is undefined
 }
-else {
-
-  setBreedResults(getBreedInfo(breed))
-
-  if (!breedResults) {
-     Alert.alert("Please enter a valid Breed.");
-      return; // Exit the function early if searchQuery is undefined
-  } else {console.log (`hey you have results  ${breed}`)}
-
- 
-}
-  
-  
+    
+    try {
+        const response = await fetch(`${apiURL}=${breed}&offset=0`, options);
+        const result = await response.json();
+    
+    if (result.length === 0) {
+        console.log('No Breed Found');
+        Alert.alert('No Breed Found', 'Please enter a valid breed');
+        return null;; // Added return statement to exit the function
+    } else {
+    setBreedResults(result)
+    }
+    
+    } catch (error) {
+      console.error(error);
+      Alert.alert("An error occurred while fetching breed information.");
+    }
+    
   }
   
   const onChangeSearch = (query) => {

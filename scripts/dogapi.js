@@ -24,8 +24,8 @@ const options = {
     if (result.length === 0) {
       console.log('No Breed Found');
        Alert.alert('No Breed Found', 'Please enter a valid breed');
-    return; // Added return statement to exit the function
-  }  
+    return null;; // Added return statement to exit the function
+    } 
 
 
     console.log("----------------");
@@ -158,8 +158,8 @@ const options = {
        
        
       //  ****** remove these logs for production ******
-       console.log(`Breed: ${result.name} \n  Shedding: ${sheddingDescription} \n  Grooming: ${groomDescription} \n  Drooling: ${droolingDescription} \n  Children: ${childrenDescription} \n  Strangers: ${strangersDescription}  \n  Other-Dogs: ${otherDogDescription} \n Playfulness: ${playfullDogDescription}  \n Protectiveness: ${protectDescription} \n Trainability: ${trainabilityDescription} \n Barking: ${barkyDescription}  \n Min. Life Expectancy: ${result.min_life_expectancy} years \n Max. Life Expectancy: ${result.max_life_expectancy} years \n Min. Height Male: ${result.min_height_male} inches \n Max. Height Male: ${result.max_height_male} inches \n Min. Weight Male: ${result.min_weight_male} lbs \n Max. Weight Male: ${result.max_weight_male} lbs \n Min. Height Female: ${result.min_height_female} inches \n Max. Height Female: ${result.max_height_female} inches \n Min. Weight Female: ${result.min_weight_female} lbs \n Max. Weight Female: ${result.max_weight_female} lbs \n-------------------`);
-      //  ****** end of logs ********
+      //  console.log(`Breed: ${result.name} \n  Shedding: ${sheddingDescription} \n  Grooming: ${groomDescription} \n  Drooling: ${droolingDescription} \n  Children: ${childrenDescription} \n  Strangers: ${strangersDescription}  \n  Other-Dogs: ${otherDogDescription} \n Playfulness: ${playfullDogDescription}  \n Protectiveness: ${protectDescription} \n Trainability: ${trainabilityDescription} \n Barking: ${barkyDescription}  \n Min. Life Expectancy: ${result.min_life_expectancy} years \n Max. Life Expectancy: ${result.max_life_expectancy} years \n Min. Height Male: ${result.min_height_male} inches \n Max. Height Male: ${result.max_height_male} inches \n Min. Weight Male: ${result.min_weight_male} lbs \n Max. Weight Male: ${result.max_weight_male} lbs \n Min. Height Female: ${result.min_height_female} inches \n Max. Height Female: ${result.max_height_female} inches \n Min. Weight Female: ${result.min_weight_female} lbs \n Max. Weight Female: ${result.max_weight_female} lbs \n-------------------`);
+      // //  ****** end of logs ********
     });
 
   } catch (error) {
