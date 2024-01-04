@@ -1,6 +1,9 @@
 import React from "react";
 import { View, StyleSheet, Image, ScrollView, Text  } from "react-native";
 import { Card } from "react-native-paper";
+import { Platform } from 'react-native';
+
+const isIpad = Platform.OS === 'ios' && Platform.isPad;
 
 const ResultDisplay = ({ breedResults, breed }) => {
 
@@ -119,12 +122,12 @@ const ResultDisplay = ({ breedResults, breed }) => {
     <ScrollView style={styles.scrollViewContent}>
     <View style={styles.cardContainer} >
       {breedResults.map((breedResult, index) => (
-      <Card key={index} style={styles.card}>
+        <Card key={index} style={styles.card}>
           <Text style={styles.breedName}>{breedResult.name }</Text>
           <Image
             source={{ uri: breedResult.image_link }}
             style={styles.cardImage}
-          />
+            />
         <View style={styles.infoContainer}>
             <View style={styles.infoLine}>
               <Text style={styles.bullet}>•</Text>
@@ -221,19 +224,18 @@ const ResultDisplay = ({ breedResults, breed }) => {
       </Card>
       ))}
         <Text style={styles.disclaimer}>** Please Note: All measurements of height, weight, and other dimensions in this application are provided in accordance with United States standards. Please be aware that these values may differ from measurements used in other regions, and conversion may be required for international comparisons. </Text>
-    </View>
+      </View>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  cardContainer: {
+cardContainer: {
     margin: 10,
     flexDirection: "row",
     flexWrap: "wrap",
-    justifyContent: "space-between",
-    
-
+   maxWidth: "100%",
+    justifyContent: "center",
   },
  infoLine: {
     flexDirection: "row",
@@ -254,7 +256,9 @@ const styles = StyleSheet.create({
   },
 
   card: {
-    width: "100%", 
+   
+    width: isIpad ? 500 : "100%",
+    marginVertical: 10,
     marginVertical: 10,
     backgroundColor: "rgba(231, 229, 229, 0.5)", 
     borderRadius: 20,
@@ -318,7 +322,11 @@ const styles = StyleSheet.create({
   disclaimer: {
     color: "white",
     fontStyle: 'italic',
-  }
+    width: isIpad ? 500 : "100%",
+  },
+
+ 
+
 });
 
 export default ResultDisplay

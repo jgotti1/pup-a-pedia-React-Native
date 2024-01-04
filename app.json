@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "pup-a-pedia",
-    "slug": "pup-a-pedia",
-    "version": "1.0.1",
+    "name": "pup-a-pedia-app",
+    "slug": "pup-a-pedia-app",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -15,16 +15,16 @@
       "**/*"
     ],
     "ios": {
-      "buildNumber": "1.0.1",
+      "buildNumber": "1.0.2",
       "supportsTablet": true,
-      "bundleIdentifier": "com.jgotti711.pupapedia"
+      "bundleIdentifier": "com.jgotti711.pupapediaapp"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.jgotti711.pupapedia"
+      "package": "com.jgotti711.pupapediaapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
