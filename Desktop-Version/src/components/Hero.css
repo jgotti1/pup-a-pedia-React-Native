@@ -52,7 +52,10 @@
   max-width: 46%;
   object-fit: contain;
   object-position: bottom center;
-  filter: drop-shadow(0 22px 38px rgba(0, 0, 0, 0.22));
+  /* Two stacked shadows: one thrown to the left so the silhouette is lit from
+     the right and glows off its left edge, plus the grounding shadow below. */
+  filter: drop-shadow(-26px 8px 40px rgba(0, 0, 0, 0.3))
+    drop-shadow(0 24px 42px rgba(0, 0, 0, 0.28));
 }
 
 .hero__content {
