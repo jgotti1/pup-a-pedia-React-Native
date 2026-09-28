@@ -165,3 +165,12 @@ Before calling UI work done, check:
 
 Screenshot and actually look at the result. Several of the fixes above came from
 seeing a render, not from reading the code.
+
+## Portfolio card
+
+The **root** `README.md` (not this directory's) ends with a hidden JSON block
+between `portfolio-card:start` / `portfolio-card:end` markers, which a portfolio
+site reads to build a project card. Keep it in sync when features, tech stack or
+URLs change. It must stay valid JSON and must never contain a `--` sequence,
+which would close the surrounding HTML comment early. The preview image it
+points at is `docs/preview.jpg` at the repo root.
