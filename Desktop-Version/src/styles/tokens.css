@@ -1,0 +1,140 @@
+/* ---------------------------------------------------------------------------
+   Design tokens. Single source of truth for color, type, space, elevation and
+   motion. Components never hardcode a raw value - they reference a token so a
+   theme change is one edit here, not fifty edits across the CSS.
+   --------------------------------------------------------------------------- */
+
+:root {
+  /* Brand ----------------------------------------------------------------- */
+  --brand-500: #ffb703;
+  --brand-600: #e69800;
+  --brand-700: #b87900;
+  --brand-100: #fff4d6;
+
+  /* Type scale (1.25 ratio, desktop-first) -------------------------------- */
+  --font-display: "Bangers-Regular", "LilitaOne-Regular", system-ui, cursive;
+  --font-paw: "MfPawPrints-rgXM7", cursive;
+  --font-ui: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+
+  --text-2xs: 0.6875rem; /* 11px - meta, legal */
+  --text-xs: 0.75rem;    /* 12px - labels, chips */
+  --text-sm: 0.8125rem;  /* 13px - dense UI */
+  --text-base: 0.9375rem;/* 15px - body */
+  --text-md: 1.0625rem;  /* 17px - lead */
+  --text-lg: 1.375rem;   /* 22px - card titles */
+  --text-xl: 1.75rem;    /* 28px - section titles */
+  --text-2xl: 2.25rem;   /* 36px */
+  --text-hero: clamp(2.75rem, 5.5vw, 5rem);
+
+  /* Space scale (4px base) ------------------------------------------------ */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+
+  /* Radii ---------------------------------------------------------------- */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 22px;
+  --radius-pill: 999px;
+
+  /* Layout --------------------------------------------------------------- */
+  --header-h: 68px;
+  --shell-max: 1440px;
+  --rail-w: 264px;
+  --gutter: var(--space-8);
+
+  /* Motion --------------------------------------------------------------- */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 120ms;
+  --dur-mid: 200ms;
+  --dur-slow: 320ms;
+
+  /* Focus ---------------------------------------------------------------- */
+  --focus-ring: 0 0 0 3px color-mix(in srgb, var(--brand-500) 55%, transparent);
+}
+
+/* Dark theme is the default look: a reference tool that is comfortable to read
+   for long stretches, with the photo warmth reserved for the hero. */
+:root,
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg-base: #0c1018;
+  --bg-sunken: #080b11;
+  --bg-surface: #141a25;
+  --bg-surface-2: #1b2230;
+  --bg-surface-3: #232b3b;
+  --bg-inset: #0f141d;
+
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-default: rgba(255, 255, 255, 0.14);
+  --border-strong: rgba(255, 255, 255, 0.28);
+
+  --fg-default: #eef1f6;
+  --fg-muted: #a7b0c0;
+  --fg-subtle: #737d8f;
+  --fg-onbrand: #1a1305;
+
+  --meter-track: rgba(255, 255, 255, 0.12);
+  --scrim: rgba(4, 6, 11, 0.72);
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.6);
+
+  --photo-mat: #0f141d;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --bg-base: #f6f7f9;
+  --bg-sunken: #eceef2;
+  --bg-surface: #ffffff;
+  --bg-surface-2: #f7f8fa;
+  --bg-surface-3: #eef0f4;
+  --bg-inset: #f2f4f7;
+
+  --border-subtle: rgba(15, 20, 29, 0.08);
+  --border-default: rgba(15, 20, 29, 0.14);
+  --border-strong: rgba(15, 20, 29, 0.32);
+
+  --fg-default: #141a25;
+  --fg-muted: #565e6d;
+  --fg-subtle: #7b8494;
+  --fg-onbrand: #1a1305;
+
+  --meter-track: rgba(15, 20, 29, 0.1);
+  --scrim: rgba(12, 16, 24, 0.55);
+
+  --shadow-sm: 0 1px 2px rgba(15, 20, 29, 0.08);
+  --shadow-md: 0 8px 24px rgba(15, 20, 29, 0.1);
+  --shadow-lg: 0 24px 60px rgba(15, 20, 29, 0.18);
+
+  --photo-mat: #eef0f4;
+}
+
+/* Tablet and below: tighten the rhythm rather than rescaling everything. */
+@media (max-width: 1024px) {
+  :root {
+    --gutter: var(--space-6);
+    --header-h: 62px;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --gutter: var(--space-4);
+    --header-h: 58px;
+  }
+}

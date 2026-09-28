@@ -1,0 +1,167 @@
+# CLAUDE.md — Desktop-Version
+
+Guidance for working in `Desktop-Version/`, the React + Vite web build of
+Pup-A-Pedia. The repo root is a separate Expo / React Native app; **the two do
+not share code**. Changes here never affect the mobile app, and vice versa.
+
+## Commands
+
+Run everything from `Desktop-Version/`:
+
+```bash
+npm install
+npm run dev        # vite dev server (falls back off :5173 if taken)
+npm run build      # production build into dist/
+npm run preview    # serve the built output
+```
+
+There is no test runner and no linter configured. Verification is done by
+driving a real browser — see **Verifying changes** below.
+
+## Architecture
+
+```
+src/
+  lib/          data layer, no React imports
+    api.js          fetch + BreedSearchError (kinds: config/auth/rate-limit/network/server)
+    traits.js       the 0–5 trait vocabulary + quick-filter definitions
+    format.js       imperial range / midpoint / size-band formatting
+    popularBreeds.js
+  hooks/
+    useBreedSearch.js  status machine: idle|loading|success|empty|error, aborts stale requests
+    useCompare.js      compare tray, localStorage-persisted, COMPARE_LIMIT = 4
+    useTheme.js        light/dark, persisted, seeded from OS preference
+    useMediaQuery.js   reactive breakpoints where layout drives behaviour
+  styles/tokens.css    ALL color / space / type / radius / motion values
+  components/          presentational; each .jsx has a sibling .css
+```
+
+Rules that keep this coherent:
+
+- **Trait wording lives only in `traits.js`.** Adding or rewording a rating is
+  one object there; it propagates to cards, the detail modal, the compare table
+  and the filters. Never inline a trait sentence in JSX.
+- **No hardcoded colors or spacing in component CSS.** Reference a token. This
+  is what makes the light theme a second variable block rather than a second
+  stylesheet. The one deliberate exception is documented inline.
+- **Desktop-first.** Base CSS targets the wide canvas; `max-width` queries step
+  down through 1200 / 1024 / 900 / 640 / 560. Do not add `min-width` queries.
+- **`lib/` stays React-free** so data rules are testable and reusable.
+
+## Design decisions
+
+The reasoning behind choices that look arbitrary from the code alone. Changing
+any of these is fine — knowing why they are there is the point.
+
+**Ratings are segmented meters, not sentences.** A 0–5 bar is comparable at a
+glance down a grid column, which sentences are not. The sentence still exists,
+in the full profile and as `aria-valuetext`, so nothing is lost to screen
+readers or to anyone wanting the detail.
+
+**Filters render only when they can split the set.** A quick filter appears
+only if it would keep some but not all of the current results, computed against
+the unfiltered set so the list does not reshuffle while toggling. On a
+single-breed search every filter either keeps the one result or empties the
+list, so the rail and its toolbar toggle disappear entirely and the grid takes
+the full width. Facet counts are computed against the *other* active filters, so
+each number is what that checkbox would actually leave you with.
+
+**Compare is a cart, not a mode.** Breeds are added from result cards to a
+docked tray that persists across searches and reloads. It holds whole breed
+records rather than references into the current results, because comparing a
+Labrador against a Poodle takes two separate searches — a selection scoped to
+one result set would be useless. Capped at four, which is what stays readable as
+columns. The comparison puts breeds in columns and attributes in rows so the eye
+can scan one attribute across every candidate.
+
+**The hero dog is a cut-out.** The original asset is a 828x1792 portrait phone
+wallpaper with a grey studio backdrop and the dog in the lower third. It worked
+as neither a full-bleed landscape hero (an unrecognisable smear) nor a framed
+panel (fussy, and it ballooned on tall viewports). The subject is now
+silhouetted straight onto the page background. Because no text sits over a
+photo, the hero needs no scrim, no forced light-on-dark copy and no special
+app-bar treatment — that deletion is most of why the hero CSS is simple.
+
+**No `alert()`.** Empty input is inline validation, no matches is an empty state
+offering suggestions, and a failed request is an error panel naming the real
+cause (auth / rate limit / network / config) with a retry.
+
+**No vendor naming in user-facing copy.** Provider names stay in `.env`,
+`.env.example` and code comments.
+
+## Environment
+
+`VITE_API_URL` and `VITE_API_KEY` come from `.env` (gitignored; `.env.example`
+has the shape). When either is missing, `api.js` throws a `config`-kind error
+and the UI says so rather than failing silently.
+
+The key is compiled into the client bundle — unavoidable for a static build
+calling the API directly. If this is ever deployed publicly, put a small proxy
+in front and drop the key from the client.
+
+User-facing copy must not name the upstream data vendor. Keep provider names in
+`.env` / `.env.example` and code comments only.
+
+## Regenerating the hero cut-out
+
+`src/assets/images/doggy-cutout.webp` is the silhouetted dog. It was derived
+from `doggy-bkg.jpg` (kept in the repo purely as the source for this). To redo
+it, use Apple's Vision framework locally — no service upload:
+
+1. Swift program using `VNGenerateForegroundInstanceMaskRequest` +
+   `generateMaskedImage(ofInstances:from:croppedToInstancesExtent:)`. Pass
+   `croppedToInstancesExtent: false` so the output stays aligned to the source.
+2. **Decontaminate the edges.** The raw matte leaves a rim of studio grey that
+   shows as a halo on the dark theme. The backdrop is a smooth vertical
+   gradient, so estimate `B(y)` from the outer ~24 columns of each row and solve
+   `C = a·dog + (1−a)·B` for the dog's true color, clamping where `a` is tiny.
+3. Crop to the alpha bbox, export WebP (~85 KB vs ~720 KB for PNG).
+4. Check the result composited over **both** `--bg-base` values before shipping.
+
+## Gotchas already paid for
+
+Do not reintroduce these — each cost a real debugging cycle:
+
+- **`ul[class]` in a reset beats component classes.** Specificity (0,1,1) vs
+  (0,1,0) silently ate every list margin. The reset uses `:where(...)` to sit at
+  zero specificity. Keep it that way.
+- **Grid rows size to max-content.** A scrollable panel inside a grid needs an
+  explicit `grid-template-rows: minmax(0, 1fr)` plus `min-height: 0` on the
+  scrolling child, or `max-height` merely *clips* and no scrollbar appears. This
+  made the detail modal's lower traits unreachable.
+- **`flex: 1 1 320px` flips axis in a column.** Fine in the footer's row layout;
+  once mobile switches to `flex-direction: column` it becomes a 320px *tall*
+  basis that grows. Reset it in the mobile block.
+- **Chrome clears `<input type="search">` on Escape.** The search field calls
+  `preventDefault()` when its suggestion list is open so Escape dismisses the
+  list without wiping the query.
+- **React 18 wants lowercase `fetchpriority`.** camelCase is React 19+ and warns.
+- **The filter rail is conditional.** A quick filter renders only if it would
+  keep *some but not all* results, computed from the unfiltered set so the list
+  stays stable while toggling. On a single-result search the whole rail and its
+  toolbar toggle disappear. Don't "restore" the missing checkboxes.
+- **Compare holds whole breed records**, not references into current results —
+  the tray must survive a new search, which is the entire point of the feature.
+
+## Verifying changes
+
+There is no test suite; drive Chrome with Playwright instead. Playwright's own
+browsers are not downloaded here — use the system Chrome:
+
+```js
+await chromium.launch({ channel: "chrome" });
+```
+
+Before calling UI work done, check:
+
+- Both themes (`colorScheme: "dark" | "light"` on the context).
+- Several viewport **heights**, not just widths — the hero has broken twice on
+  tall displays while looking fine at 950px. Use at least 1280×720, 1512×950 and
+  1920×1200, plus 834 and 390 wide.
+- `document.documentElement.scrollWidth - clientWidth === 0` (no h-overflow).
+- Console errors and `pageerror` are empty.
+- Keyboard paths still work: combobox arrows/Escape/Enter, modal focus trap and
+  focus restoration on close, skip link.
+
+Screenshot and actually look at the result. Several of the fixes above came from
+seeing a render, not from reading the code.

@@ -1,0 +1,150 @@
+.appbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  height: var(--header-h);
+  background: color-mix(in srgb, var(--bg-base) 82%, transparent);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.appbar__inner {
+  height: 100%;
+  width: 100%;
+  max-width: var(--shell-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+/* Brand ------------------------------------------------------------------- */
+.appbar__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2);
+  margin-left: calc(var(--space-2) * -1);
+  border: none;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--fg-default);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.appbar__brand:hover {
+  color: var(--brand-500);
+}
+
+.appbar__brand-mark {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+  background: var(--brand-500);
+  color: var(--fg-onbrand);
+  flex-shrink: 0;
+}
+
+.appbar__brand-text {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+
+.appbar__brand-paw {
+  font-family: var(--font-paw);
+  font-size: 1.25em;
+  color: var(--brand-500);
+}
+
+/* Header search ----------------------------------------------------------- */
+.appbar__search {
+  max-width: 420px;
+  justify-self: center;
+  width: 100%;
+}
+
+/* Actions ----------------------------------------------------------------- */
+.appbar__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.appbar__version {
+  font-size: var(--text-2xs);
+  font-variant-numeric: tabular-nums;
+  color: var(--fg-subtle);
+}
+
+.appbar__icon-button {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface-2);
+  color: var(--fg-muted);
+  transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out),
+    background var(--dur-fast) var(--ease-out);
+}
+
+.appbar__icon-button:hover {
+  color: var(--fg-default);
+  border-color: var(--border-strong);
+  background: var(--bg-surface-3);
+}
+
+.appbar__credit {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-xs);
+  color: var(--fg-subtle);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.appbar__credit:hover {
+  color: var(--brand-500);
+}
+
+@media (max-width: 900px) {
+  .appbar__inner {
+    gap: var(--space-4);
+  }
+
+  .appbar__version,
+  .appbar__credit {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .appbar__inner {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+
+  .appbar__brand-text {
+    display: none;
+  }
+
+  .appbar__search {
+    max-width: none;
+  }
+}
+
+/* On the landing view the bar dissolves into the hero instead of banding it. */
+.appbar[data-over-hero] {
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-bottom-color: transparent;
+}

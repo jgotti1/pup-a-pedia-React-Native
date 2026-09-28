@@ -1,0 +1,374 @@
+.compare {
+  position: fixed;
+  inset: 0;
+  z-index: 55;
+  display: grid;
+  place-items: center;
+  padding: var(--space-6);
+  background: var(--scrim);
+  backdrop-filter: blur(6px);
+  animation: compare-fade var(--dur-mid) var(--ease-out);
+}
+
+@keyframes compare-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+.compare__panel {
+  display: grid;
+  /* Header and footnote are fixed; only the table scrolls. */
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  width: min(1320px, 100%);
+  max-height: min(92vh, 1000px);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  animation: compare-rise var(--dur-slow) var(--ease-out);
+}
+
+@keyframes compare-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.99);
+  }
+}
+
+/* Header ------------------------------------------------------------------ */
+.compare__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  padding: var(--space-5) var(--space-6);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.compare__eyebrow {
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--brand-500);
+}
+
+.compare__title {
+  margin-top: 2px;
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  letter-spacing: 0.03em;
+}
+
+.compare__header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.compare__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--fg-muted);
+  cursor: pointer;
+  transition: border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+
+.compare__toggle:hover {
+  border-color: var(--border-strong);
+  color: var(--fg-default);
+}
+
+.compare__toggle input {
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  margin: 0;
+  border: 1.5px solid var(--border-strong);
+  border-radius: 4px;
+  display: grid;
+  place-content: center;
+}
+
+.compare__toggle input::after {
+  content: "";
+  width: 8px;
+  height: 4px;
+  border-left: 2px solid var(--fg-onbrand);
+  border-bottom: 2px solid var(--fg-onbrand);
+  transform: rotate(-45deg) translateY(-1px);
+  opacity: 0;
+}
+
+.compare__toggle input:checked {
+  background: var(--brand-500);
+  border-color: var(--brand-500);
+}
+
+.compare__toggle input:checked::after {
+  opacity: 1;
+}
+
+.compare__toggle-count {
+  padding: 1px var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--bg-surface-3);
+  font-size: var(--text-2xs);
+  font-variant-numeric: tabular-nums;
+  color: var(--fg-subtle);
+}
+
+.compare__close {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-pill);
+  background: var(--bg-surface-2);
+  color: var(--fg-muted);
+  transition: color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
+}
+
+.compare__close:hover {
+  color: var(--fg-default);
+  background: var(--bg-surface-3);
+}
+
+/* Table ------------------------------------------------------------------- */
+.compare__scroll {
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.compare__table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.compare__corner,
+.compare__row-label {
+  /* The attribute column stays put so a horizontal scroll never orphans the
+     values from the thing they describe. */
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  width: 190px;
+  min-width: 190px;
+  text-align: left;
+  background: var(--bg-surface);
+  border-right: 1px solid var(--border-subtle);
+}
+
+.compare__row-label {
+  padding: var(--space-4) var(--space-5);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--fg-muted);
+  vertical-align: middle;
+}
+
+/* Breed column headers stay visible while scrolling down a long attribute list. */
+.compare__breed {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: var(--space-4) var(--space-4) var(--space-5);
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-default);
+  text-align: center;
+  vertical-align: bottom;
+}
+
+.compare__corner {
+  z-index: 3;
+  top: 0;
+  border-bottom: 1px solid var(--border-default);
+}
+
+/* Capped so the photo header does not push the actual comparison data off
+   screen - the rows are what the visitor came for. */
+.compare__breed-media {
+  aspect-ratio: 4 / 3;
+  max-width: 190px;
+  margin-inline: auto;
+  margin-bottom: var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--photo-mat);
+  overflow: hidden;
+}
+
+.compare__breed-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.compare__breed-fallback {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  color: var(--fg-subtle);
+}
+
+.compare__breed-name {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  letter-spacing: 0.04em;
+  color: var(--fg-default);
+}
+
+.compare__breed-remove {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-top: var(--space-2);
+  padding: 2px var(--space-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--fg-subtle);
+  font-size: var(--text-2xs);
+  transition: color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+}
+
+.compare__breed-remove:hover {
+  color: var(--fg-default);
+  border-color: var(--border-strong);
+}
+
+.compare__group-row th {
+  position: sticky;
+  left: 0;
+  padding: var(--space-4) var(--space-5) var(--space-2);
+  background: var(--bg-surface);
+  text-align: left;
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-subtle);
+}
+
+.compare__table tbody tr:not(.compare__group-row) {
+  border-top: 1px solid var(--border-subtle);
+}
+
+/* Rows where every breed agrees are dimmed so differences carry the eye. */
+.compare__table tbody tr[data-uniform] .compare__value,
+.compare__table tbody tr[data-uniform] .compare__row-label {
+  opacity: 0.5;
+}
+
+.compare__value {
+  padding: var(--space-4) var(--space-4);
+  text-align: center;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--fg-default);
+  vertical-align: middle;
+}
+
+.compare__meter {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 3px;
+  max-width: 150px;
+  margin-inline: auto;
+}
+
+.compare__segment {
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background: var(--meter-track);
+}
+
+.compare__segment[data-filled] {
+  background: var(--brand-500);
+}
+
+.compare__meter-text {
+  display: block;
+  margin-top: var(--space-2);
+  font-size: var(--text-2xs);
+  font-weight: 500;
+  color: var(--fg-subtle);
+}
+
+.compare__footnote {
+  padding: var(--space-4) var(--space-6);
+  border-top: 1px solid var(--border-subtle);
+  font-size: var(--text-xs);
+  font-style: italic;
+  color: var(--fg-subtle);
+}
+
+@media (max-width: 900px) {
+  .compare {
+    padding: 0;
+    place-items: stretch;
+  }
+
+  .compare__panel {
+    width: 100%;
+    max-height: 100vh;
+    height: 100%;
+    border: none;
+    border-radius: 0;
+  }
+
+  .compare__header {
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    padding: var(--space-4);
+  }
+
+  .compare__header-actions {
+    width: 100%;
+    justify-content: space-between;
+    order: 3;
+  }
+
+  .compare__close {
+    order: 2;
+  }
+
+  /* Narrower sticky label column, and columns wide enough to stay legible
+     while the table scrolls sideways. */
+  .compare__corner,
+  .compare__row-label {
+    width: 124px;
+    min-width: 124px;
+    padding-inline: var(--space-3);
+    font-size: var(--text-xs);
+  }
+
+  .compare__table {
+    table-layout: auto;
+  }
+
+  .compare__breed {
+    min-width: 168px;
+  }
+
+  .compare__breed-media {
+    max-width: 130px;
+  }
+
+  .compare__value {
+    padding-inline: var(--space-3);
+  }
+}

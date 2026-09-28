@@ -1,0 +1,226 @@
+.breed-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--dur-mid) var(--ease-out), box-shadow var(--dur-mid) var(--ease-out),
+    border-color var(--dur-mid) var(--ease-out);
+}
+
+.breed-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--border-default);
+  box-shadow: var(--shadow-md);
+}
+
+/* Media ------------------------------------------------------------------- */
+/* A fixed 4:3 frame with object-fit: contain keeps every grid row aligned
+   while never cropping a dog's head off an oddly proportioned source image. */
+.breed-card__media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: var(--photo-mat);
+  border-bottom: 1px solid var(--border-subtle);
+  overflow: hidden;
+}
+
+.breed-card__media[data-state="loading"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    var(--photo-mat) 20%,
+    var(--bg-surface-3) 45%,
+    var(--photo-mat) 70%
+  );
+  background-size: 220% 100%;
+  animation: card-shimmer 1.3s var(--ease-out) infinite;
+}
+
+@keyframes card-shimmer {
+  to {
+    background-position: -180% 0;
+  }
+}
+
+.breed-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+
+.breed-card:hover .breed-card__image {
+  transform: scale(1.03);
+}
+
+.breed-card__image-fallback {
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: var(--space-2);
+  height: 100%;
+  color: var(--fg-subtle);
+  font-size: var(--text-xs);
+}
+
+.breed-card__badge {
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-3);
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--bg-base) 78%, transparent);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-default);
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-default);
+}
+
+/* Body -------------------------------------------------------------------- */
+.breed-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  flex: 1;
+}
+
+.breed-card__name {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  line-height: 1.15;
+  letter-spacing: 0.04em;
+  color: var(--fg-default);
+}
+
+.breed-card__life {
+  margin-top: 2px;
+  font-size: var(--text-xs);
+  color: var(--fg-subtle);
+}
+
+.breed-card__stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-2);
+  padding: var(--space-3);
+  background: var(--bg-inset);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+}
+
+.breed-card__stat dt {
+  font-size: var(--text-2xs);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg-subtle);
+}
+
+.breed-card__stat dd {
+  margin: 2px 0 0;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--fg-default);
+}
+
+.breed-card__traits {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.breed-card__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-top: auto;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--fg-default);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  transition: background var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+.breed-card__cta:hover {
+  background: var(--brand-500);
+  border-color: var(--brand-500);
+  color: var(--fg-onbrand);
+}
+
+/* Compact list density for narrow viewports and the list view toggle. */
+@media (max-width: 480px) {
+  .breed-card__body {
+    padding: var(--space-4);
+  }
+
+  .breed-card__stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-1);
+  }
+}
+
+/* Card actions ------------------------------------------------------------ */
+.breed-card__actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--space-2);
+  margin-top: auto;
+}
+
+.breed-card__compare {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--fg-muted);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+
+.breed-card__compare:hover:not(:disabled) {
+  border-color: var(--border-strong);
+  color: var(--fg-default);
+}
+
+.breed-card__compare[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--brand-500) 16%, transparent);
+  border-color: var(--brand-500);
+  color: var(--fg-default);
+}
+
+.breed-card__compare:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* The CTA no longer owns the bottom margin now that it sits in a row. */
+.breed-card__cta {
+  margin-top: 0;
+}
+
+@media (max-width: 380px) {
+  .breed-card__actions {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

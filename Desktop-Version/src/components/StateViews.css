@@ -1,0 +1,161 @@
+/* Shimmer ---------------------------------------------------------------- */
+.shimmer {
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-surface-2);
+}
+
+.shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    transparent 20%,
+    color-mix(in srgb, var(--fg-default) 7%, transparent) 45%,
+    transparent 70%
+  );
+  background-size: 220% 100%;
+  animation: state-shimmer 1.35s var(--ease-out) infinite;
+}
+
+@keyframes state-shimmer {
+  to {
+    background-position: -180% 0;
+  }
+}
+
+/* Skeleton cards -------------------------------------------------------- */
+.skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(288px, 1fr));
+  gap: var(--space-6);
+}
+
+.skeleton-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.skeleton-card__media {
+  aspect-ratio: 4 / 3;
+}
+
+.skeleton-card__body {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-5);
+}
+
+.skeleton-line {
+  height: 12px;
+  border-radius: var(--radius-sm);
+}
+
+.skeleton-line--title {
+  height: 22px;
+  width: 62%;
+}
+
+.skeleton-line--stats {
+  height: 56px;
+  border-radius: var(--radius-md);
+}
+
+.skeleton-card__traits {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.skeleton-line--cta {
+  height: 40px;
+  border-radius: var(--radius-md);
+}
+
+/* Empty / error panels --------------------------------------------------- */
+.state {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  gap: var(--space-4);
+  max-width: 520px;
+  margin-inline: auto;
+  padding: var(--space-16) var(--space-6);
+}
+
+.state__glyph {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border-subtle);
+  color: var(--fg-muted);
+}
+
+.state__glyph--error {
+  color: #ff8f8f;
+  border-color: color-mix(in srgb, #ff8f8f 34%, transparent);
+  background: color-mix(in srgb, #ff8f8f 10%, transparent);
+}
+
+.state__title {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  letter-spacing: 0.03em;
+}
+
+.state__body {
+  font-size: var(--text-base);
+  color: var(--fg-muted);
+}
+
+.state__action {
+  padding: var(--space-3) var(--space-6);
+  border: none;
+  border-radius: var(--radius-md);
+  background: var(--brand-500);
+  color: var(--fg-onbrand);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  transition: background var(--dur-fast) var(--ease-out);
+}
+
+.state__action:hover {
+  background: var(--brand-600);
+}
+
+.state__chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2);
+}
+
+.state__chip {
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-pill);
+  background: var(--bg-surface);
+  color: var(--fg-muted);
+  font-size: var(--text-xs);
+  transition: border-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+
+.state__chip:hover {
+  border-color: var(--brand-500);
+  color: var(--fg-default);
+}
+
+@media (max-width: 640px) {
+  .state {
+    padding-block: var(--space-12);
+  }
+
+  .skeleton-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

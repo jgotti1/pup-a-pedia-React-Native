@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#0c1018" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)" />
+    <meta
+      name="description"
+      content="Pup-A-Pedia is a dog breed reference: search any breed and compare temperament, care needs, household fit, size and lifespan side by side."
+    />
+    <title>Pup-A-Pedia — Dog Breed Reference</title>
+
+    <!-- Apply the stored theme before first paint so the page never flashes
+         the wrong palette. Mirrors the key used in useTheme.js. -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem("pup-a-pedia:theme");
+          if (stored === "light" || stored === "dark") {
+            document.documentElement.dataset.theme = stored;
+            return;
+          }
+        } catch (e) {}
+        document.documentElement.dataset.theme = window.matchMedia(
+          "(prefers-color-scheme: light)"
+        ).matches
+          ? "light"
+          : "dark";
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

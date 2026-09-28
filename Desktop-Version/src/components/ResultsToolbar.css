@@ -1,0 +1,151 @@
+.toolbar {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-6);
+  flex-wrap: wrap;
+  padding-bottom: var(--space-5);
+  margin-bottom: var(--space-8);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.toolbar__eyebrow {
+  font-size: var(--text-2xs);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--brand-500);
+}
+
+.toolbar__title {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  margin-top: var(--space-1);
+}
+
+.toolbar__term {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  letter-spacing: 0.03em;
+  color: var(--fg-default);
+}
+
+.toolbar__count {
+  font-family: var(--font-ui);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--fg-subtle);
+}
+
+.toolbar__controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.toolbar__filter-toggle,
+.toolbar__new-search {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  color: var(--fg-default);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  transition: border-color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
+}
+
+.toolbar__filter-toggle:hover,
+.toolbar__new-search:hover {
+  border-color: var(--border-strong);
+  background: var(--bg-surface-2);
+}
+
+/* The rail is permanently visible on wide screens, so its toggle is noise. */
+.toolbar__filter-toggle {
+  display: none;
+}
+
+.toolbar__badge {
+  display: grid;
+  place-items: center;
+  min-width: 18px;
+  height: 18px;
+  padding-inline: 5px;
+  border-radius: var(--radius-pill);
+  background: var(--brand-500);
+  color: var(--fg-onbrand);
+  font-size: var(--text-2xs);
+  font-weight: 700;
+}
+
+.toolbar__select {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.toolbar__select select {
+  appearance: none;
+  padding: var(--space-2) calc(var(--space-8) + 2px) var(--space-2) var(--space-4);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  color: var(--fg-default);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+
+.toolbar__select select:hover {
+  border-color: var(--border-strong);
+}
+
+.toolbar__select-icon {
+  position: absolute;
+  right: var(--space-3);
+  pointer-events: none;
+  color: var(--fg-subtle);
+}
+
+@media (max-width: 1024px) {
+  .toolbar__filter-toggle {
+    display: inline-flex;
+  }
+
+  .toolbar {
+    margin-bottom: var(--space-6);
+  }
+}
+
+@media (max-width: 640px) {
+  .toolbar {
+    align-items: stretch;
+    gap: var(--space-4);
+  }
+
+  .toolbar__controls {
+    width: 100%;
+  }
+
+  .toolbar__select {
+    flex: 1;
+  }
+
+  .toolbar__select select {
+    width: 100%;
+  }
+
+  /* Redundant on phones while the header search is in reach, but it is the
+     only way back when the toolbar has no other controls. */
+  .toolbar__controls:has(.toolbar__select) .toolbar__new-search {
+    display: none;
+  }
+}
