@@ -12,10 +12,17 @@
   /* Pulled up under the transparent app bar so the section owns the viewport. */
   margin-top: calc(var(--header-h) * -1);
   padding-top: var(--header-h);
-  /* Capped: on a tall display an uncapped 100dvh hero strands the copy. */
+  /* min-height alone is only a floor - flex:1 below can still stretch this
+     taller than intended on a tall narrow viewport (a portrait tablet), which
+     both wastes space and pushes the copy down toward the dog's head. Pairing
+     it with max-height makes 880px an actual ceiling, not just a target. */
   min-height: min(100dvh, 880px);
+  max-height: min(100dvh, 880px);
   /* Fill the main column so the silhouette's crop line lands exactly on the
-     footer edge, instead of a dead band between the two. */
+     footer edge, instead of a dead band between the two. On a viewport tall
+     enough that the max-height above is already binding, this just leaves a
+     plain background gap before the footer - acceptable, since the footer is
+     pinned to the viewport bottom by its own margin-top: auto regardless. */
   flex: 1;
   display: grid;
   align-items: center;
@@ -46,10 +53,15 @@
   right: max(var(--gutter), calc((100% - var(--shell-max)) / 2 + var(--gutter)));
   bottom: 0;
   /* Blown up and bled off the bottom edge, cropped by the section rather than
-     by a frame. Height-driven so it scales with the hero, not the text column. */
-  height: min(86%, 780px);
-  width: auto;
-  max-width: 46%;
+     by a frame. Width-driven (height follows from the <img> intrinsic ratio,
+     with a px cap of its own) so its footprint shrinks with the container at
+     the same rate as .hero__content's padding-right reserves for it - a
+     height-only cap stayed a constant ~490px wide regardless of container
+     width and ran into the copy below about 1250px wide (an iPad Pro 12.9"
+     portrait, 1024px, sits right in that broken zone). */
+  width: min(34%, 460px);
+  height: auto;
+  max-height: min(86%, 780px);
   object-fit: contain;
   object-position: bottom center;
   /* Two stacked shadows: one thrown to the left so the silhouette is lit from
@@ -179,6 +191,10 @@
     padding-right: 40%;
   }
 
+  .hero__dog {
+    width: min(30%, 380px);
+  }
+
   .hero__highlights {
     gap: var(--space-4);
   }
@@ -232,6 +248,7 @@
     position: static;
     display: block;
     height: auto;
+    max-height: none;
     width: min(70%, 320px);
     max-width: none;
     margin: var(--space-10) auto 0;

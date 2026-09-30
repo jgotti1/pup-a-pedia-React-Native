@@ -142,6 +142,24 @@ Do not reintroduce these — each cost a real debugging cycle:
   toolbar toggle disappear. Don't "restore" the missing checkboxes.
 - **Compare holds whole breed records**, not references into current results —
   the tray must survive a new search, which is the entire point of the feature.
+- **The hero's dog size and the copy's side reservation must scale off the same
+  basis.** `.hero__dog` used to be sized by `height: min(86%, 780px)` - a fixed
+  pixel width once the aspect ratio resolves, independent of container width -
+  while `.hero__content`'s `padding-right` was a plain percentage. Below about
+  1250px container width the two disagreed and the copy ran into the
+  silhouette; an iPad Pro 12.9" portrait (1024px) sat right in that zone. Fixed
+  by making the dog's `width` (not height) the driving dimension, so both sides
+  shrink at the same rate. If you touch hero sizing again, keep the image's
+  driving dimension and the text's reservation on the same unit (both
+  percentages, or both fixed), never one of each.
+- **`min-height` is a floor, not a ceiling.** `.hero` also has `flex: 1` to fill
+  the main column, which happily stretched it taller than its intended
+  `min-height: min(100dvh, 880px)` cap on any viewport where the flex column
+  had more than 880px of room - a tall narrow viewport (portrait tablet) being
+  the common case. The visible symptom was a large dead gap above the copy,
+  which then got vertically centered low enough to crowd the dog. Fixed by
+  adding a matching `max-height` so the two bounds pin the actual height
+  instead of one being advisory.
 
 ## Verifying changes
 
