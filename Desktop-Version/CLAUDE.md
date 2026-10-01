@@ -84,6 +84,19 @@ casual swipe stranded you mid-column with values split at the viewport edge
 `scroll-padding-left` must equal the pinned label column's width, or a snapped
 column lands underneath that sticky column; change them together.
 
+Landscape phones get their own mode keyed on **height** (`@media (max-height:
+500px)`), not width — a Pro Max turned sideways is 932px wide and would
+otherwise fall into the desktop modal. At ~390px tall, the title block, a 200px
+sticky photo header and the footnote consumed the entire viewport and zero data
+rows were visible. That mode hides the breed photos, eyebrow and footnote and
+puts the header on one line, so the sticky header is ~63px.
+
+Compare images (`CompareView`, `CompareTray`) deliberately do **not** use
+`loading="lazy"`. They sit inside a horizontally scrolling container in a fixed
+modal, where iOS Safari can fail to trigger lazy loading and leave them blank.
+There are at most four and they're already cached from the result cards, so
+lazy loading buys nothing there. `BreedCard` keeps it — normal page scroll.
+
 **The hero dog is a cut-out.** The original asset is a 828x1792 portrait phone
 wallpaper with a grey studio backdrop and the dog in the lower third. It worked
 as neither a full-bleed landscape hero (an unrecognisable smear) nor a framed

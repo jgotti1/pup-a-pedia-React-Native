@@ -400,3 +400,79 @@
     padding-inline: var(--space-3);
   }
 }
+
+/* Landscape phones: keyed on height, not width, because a Pro Max turned
+   sideways is 932px wide and would otherwise get the desktop modal. With
+   ~390px of height, the title block, a 200px sticky photo header and the
+   footnote used up the entire viewport and no data row was ever visible.
+   Here every bit of chrome collapses so the rows get the screen. */
+@media (max-height: 500px) {
+  .compare {
+    padding: 0;
+    place-items: stretch;
+  }
+
+  .compare__panel {
+    position: relative;
+    width: 100%;
+    max-height: 100dvh;
+    height: 100%;
+    border: none;
+    border-radius: 0;
+  }
+
+  .compare__header {
+    flex-wrap: nowrap;
+    padding: var(--space-2) var(--space-4);
+  }
+
+  .compare__eyebrow {
+    display: none;
+  }
+
+  .compare__title {
+    margin: 0;
+    font-size: var(--text-lg);
+  }
+
+  .compare__header-actions {
+    width: auto;
+    order: 0;
+  }
+
+  .compare__toggle {
+    padding: var(--space-1) var(--space-2);
+    font-size: var(--text-xs);
+  }
+
+  /* Names identify the columns; photos are what made the sticky header
+     taller than the space available to scroll in. */
+  .compare__breed-media {
+    display: none;
+  }
+
+  .compare__breed {
+    padding: var(--space-2) var(--space-3);
+  }
+
+  .compare__breed-name {
+    font-size: var(--text-sm);
+  }
+
+  .compare__breed-remove {
+    margin-top: var(--space-1);
+  }
+
+  .compare__group-row th {
+    padding: var(--space-2) var(--space-4) var(--space-1);
+  }
+
+  .compare__row-label,
+  .compare__value {
+    padding-block: var(--space-2);
+  }
+
+  .compare__footnote {
+    display: none;
+  }
+}

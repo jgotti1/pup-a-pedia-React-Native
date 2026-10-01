@@ -149,7 +149,7 @@ export default function CompareView({ breeds, onRemove, onClose }) {
                   <th scope="col" className="compare__breed" key={breedId(breed)}>
                     <div className="compare__breed-media">
                       {breed.image_link ? (
-                        <img src={breed.image_link} alt={`${breed.name} dog`} loading="lazy" />
+                        <img src={breed.image_link} alt={`${breed.name} dog`} decoding="async" />
                       ) : (
                         <span className="compare__breed-fallback">
                           <Icon name="photoOff" size={22} />

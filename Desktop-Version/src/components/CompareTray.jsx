@@ -28,7 +28,7 @@ export default function CompareTray({ items, onRemove, onClear, onCompare, canCo
               <li className="tray__slot" key={breedId(breed)}>
                 <span className="tray__thumb" aria-hidden="true">
                   {breed.image_link ? (
-                    <img src={breed.image_link} alt="" loading="lazy" />
+                    <img src={breed.image_link} alt="" decoding="async" />
                   ) : (
                     <Icon name="paw" size={14} />
                   )}
