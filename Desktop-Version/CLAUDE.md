@@ -86,16 +86,20 @@ column lands underneath that sticky column; change them together.
 
 Landscape phones get their own mode keyed on **height** (`@media (max-height:
 500px)`), not width — a Pro Max turned sideways is 932px wide and would
-otherwise fall into the desktop modal. At ~390px tall, the title block, a 200px
-sticky photo header and the footnote consumed the entire viewport and zero data
-rows were visible. That mode hides the breed photos, eyebrow and footnote and
-puts the header on one line, so the sticky header is ~63px.
+otherwise fall into the desktop modal. At ~390px tall, the title block ate the
+whole viewport before images were even in the picture. That mode puts the
+header on one line so the sticky header stays short.
 
-Compare images (`CompareView`, `CompareTray`) deliberately do **not** use
-`loading="lazy"`. They sit inside a horizontally scrolling container in a fixed
-modal, where iOS Safari can fail to trigger lazy loading and leave them blank.
-There are at most four and they're already cached from the result cards, so
-lazy loading buys nothing there. `BreedCard` keeps it — normal page scroll.
+**The comparison table has no breed photos at all** (`CompareView` only — the
+docked tray still shows a small thumbnail per item, a different, smaller UI
+that was never reported broken). Two independent problems led here: they sat
+inside a horizontally scrolling container in a fixed modal, where images with
+`loading="lazy"` failed to ever load on iOS Safari; and even once loading, a
+200px photo header ate the vertical space the data rows need, which in
+landscape left zero rows visible on a phone. Removing them fixed both at once
+and simplified the markup. If photos come back here, keep them lazy-load-free
+(same iOS Safari failure mode applies) and cap their height hard enough that
+landscape phones still show data rows.
 
 **The hero dog is a cut-out.** The original asset is a 828x1792 portrait phone
 wallpaper with a grey studio backdrop and the dog in the lower third. It worked

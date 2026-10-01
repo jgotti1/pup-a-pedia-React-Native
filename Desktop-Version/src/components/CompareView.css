@@ -196,31 +196,6 @@
   border-bottom: 1px solid var(--border-default);
 }
 
-/* Capped so the photo header does not push the actual comparison data off
-   screen - the rows are what the visitor came for. */
-.compare__breed-media {
-  aspect-ratio: 4 / 3;
-  max-width: 190px;
-  margin-inline: auto;
-  margin-bottom: var(--space-3);
-  border-radius: var(--radius-md);
-  background: var(--photo-mat);
-  overflow: hidden;
-}
-
-.compare__breed-media img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.compare__breed-fallback {
-  display: grid;
-  place-items: center;
-  height: 100%;
-  color: var(--fg-subtle);
-}
-
 .compare__breed-name {
   display: block;
   font-family: var(--font-display);
@@ -392,10 +367,6 @@
     scroll-snap-stop: always;
   }
 
-  .compare__breed-media {
-    max-width: 130px;
-  }
-
   .compare__value {
     padding-inline: var(--space-3);
   }
@@ -443,12 +414,6 @@
   .compare__toggle {
     padding: var(--space-1) var(--space-2);
     font-size: var(--text-xs);
-  }
-
-  /* Names identify the columns; photos are what made the sticky header
-     taller than the space available to scroll in. */
-  .compare__breed-media {
-    display: none;
   }
 
   .compare__breed {

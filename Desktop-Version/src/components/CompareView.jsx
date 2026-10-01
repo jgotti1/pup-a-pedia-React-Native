@@ -147,15 +147,11 @@ export default function CompareView({ breeds, onRemove, onClose }) {
                 </th>
                 {breeds.map((breed) => (
                   <th scope="col" className="compare__breed" key={breedId(breed)}>
-                    <div className="compare__breed-media">
-                      {breed.image_link ? (
-                        <img src={breed.image_link} alt={`${breed.name} dog`} decoding="async" />
-                      ) : (
-                        <span className="compare__breed-fallback">
-                          <Icon name="photoOff" size={22} />
-                        </span>
-                      )}
-                    </div>
+                    {/* No photo here: it never loaded reliably inside this
+                        sideways-scrolling modal on iOS Safari, and a photo
+                        header ate the vertical space the data rows need -
+                        especially in landscape, where it left zero rows
+                        visible. The name alone identifies the column. */}
                     <span className="compare__breed-name">{breed.name}</span>
                     <button
                       type="button"
