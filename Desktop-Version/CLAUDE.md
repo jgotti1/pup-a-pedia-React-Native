@@ -152,6 +152,22 @@ Do not reintroduce these — each cost a real debugging cycle:
   shrink at the same rate. If you touch hero sizing again, keep the image's
   driving dimension and the text's reservation on the same unit (both
   percentages, or both fixed), never one of each.
+- **A shared property added to a base rule must be reset in every override
+  block that changes how that element behaves, not just the ones you're
+  focused on.** Adding `max-height` to `.hero`'s base rule (to fix the tablet
+  height bug above) was never reset in the `@media (max-width: 900px)` block,
+  which already resets `min-height`/`flex`/`display` for the stacked mobile
+  layout. On mobile the dog flows in normal document flow *below* all the
+  copy, so total content height routinely exceeds the inherited 880px/100dvh
+  cap - combined with that same block's `overflow: hidden`, the dog was
+  silently clipped off entirely on every phone. Shipped straight to production
+  undetected because the automated checks run against a desktop/tablet-focused
+  suite; only caught from an actual phone screenshot. When you add a
+  constraining property (`max-height`, `overflow`, `max-width`, etc.) to an
+  element's base rule, grep every `@media` block that touches that same
+  selector and decide explicitly whether the new property should carry through
+  or be neutralized there - don't assume "I didn't touch that block" means it
+  is unaffected.
 - **`min-height` is a floor, not a ceiling.** `.hero` also has `flex: 1` to fill
   the main column, which happily stretched it taller than its intended
   `min-height: min(100dvh, 880px)` cap on any viewport where the flex column

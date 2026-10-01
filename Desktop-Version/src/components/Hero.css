@@ -205,6 +205,11 @@
 @media (max-width: 900px) {
   .hero {
     min-height: 0;
+    /* The base rule's max-height (added for the tablet fix) must not survive
+       here: stacked mobile flows the dog in normal flow *below* all the copy,
+       so total content height regularly exceeds that cap, and paired with
+       overflow:hidden below it silently clipped the dog clean off. */
+    max-height: none;
     flex: 0 1 auto;
     display: block;
     overflow: hidden;
