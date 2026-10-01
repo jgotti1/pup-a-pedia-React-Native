@@ -74,6 +74,16 @@ one result set would be useless. Capped at four, which is what stays readable as
 columns. The comparison puts breeds in columns and attributes in rows so the eye
 can scan one attribute across every candidate.
 
+On a phone the table is wider than the screen (a 124px pinned label column plus
+168px per breed), so it scrolls sideways. That scroll **snaps one breed column
+into full view per swipe** (`scroll-snap-type: x mandatory` on `.compare__scroll`,
+`scroll-snap-align: start` + `scroll-snap-stop: always` on each `.compare__breed`)
+and a constant right-edge fade hints that more columns exist. Without snap, a
+casual swipe stranded you mid-column with values split at the viewport edge
+("60-95" with its "lb" scrolled out of view) — reported as "not readable".
+`scroll-padding-left` must equal the pinned label column's width, or a snapped
+column lands underneath that sticky column; change them together.
+
 **The hero dog is a cut-out.** The original asset is a 828x1792 portrait phone
 wallpaper with a grey studio backdrop and the dog in the lower third. It worked
 as neither a full-bleed landscape hero (an unrecognisable smear) nor a framed

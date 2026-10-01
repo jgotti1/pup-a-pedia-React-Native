@@ -323,11 +323,37 @@
   }
 
   .compare__panel {
+    position: relative;
     width: 100%;
     max-height: 100vh;
     height: 100%;
     border: none;
     border-radius: 0;
+  }
+
+  /* A constant edge fade signals there's more to scroll before a visitor ever
+     touches the table - without it, nothing on screen hints that the data
+     continues past the viewport, and a swipe without scroll-snap below used
+     to leave you stranded mid-column with a value cut off at the fold
+     (e.g. "60-95" with its unit scrolled just out of view). */
+  .compare__panel::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 28px;
+    background: linear-gradient(to right, transparent, var(--bg-surface));
+    pointer-events: none;
+  }
+
+  /* Snap one breed column fully into view per swipe, so a value's label and
+     unit are never split across the viewport edge. scroll-padding-left keeps
+     a snapped column from landing underneath the sticky label column. */
+  .compare__scroll {
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: 124px;
+    -webkit-overflow-scrolling: touch;
   }
 
   .compare__header {
@@ -362,6 +388,8 @@
 
   .compare__breed {
     min-width: 168px;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
   }
 
   .compare__breed-media {
